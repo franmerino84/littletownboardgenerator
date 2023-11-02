@@ -1,4 +1,4 @@
-﻿namespace LittleTownBoardGenerator.Console;
+﻿namespace LittleTownBoardGenerator.Core;
 
 public record BoardGenerationConfigurationOptions(
     int MinWidth = 9,

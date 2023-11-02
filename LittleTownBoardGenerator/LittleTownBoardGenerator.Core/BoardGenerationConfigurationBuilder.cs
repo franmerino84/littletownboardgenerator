@@ -1,4 +1,6 @@
-﻿namespace LittleTownBoardGenerator.Console;
+﻿using LittleTownBoardGenerator.Console;
+
+namespace LittleTownBoardGenerator.Core;
 
 public static class BoardGenerationConfigurationBuilder
 {
@@ -6,7 +8,7 @@ public static class BoardGenerationConfigurationBuilder
 
     public static BoardGenerationConfiguration Build(BoardGenerationConfigurationOptions options)
     {
-        return  new BoardGenerationConfiguration
+        return new BoardGenerationConfiguration
         {
             Width = Random.Next(options.MinWidth, options.MaxWidth + 1),
             Height = Random.Next(options.MinHeight, options.MaxHeight + 1),

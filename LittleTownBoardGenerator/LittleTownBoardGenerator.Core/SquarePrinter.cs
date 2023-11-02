@@ -1,4 +1,4 @@
-﻿namespace LittleTownBoardGenerator.Console
+﻿namespace LittleTownBoardGenerator.Core
 {
     public static class SquarePrinter
     {
@@ -10,7 +10,7 @@
                 Square.Lake => "L",
                 Square.Wood => "W",
                 Square.Mountain => "M",
-                _ => throw new System.NotImplementedException()
+                _ => throw new NotImplementedException()
             };
         }
     }

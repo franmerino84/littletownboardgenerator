@@ -1,4 +1,4 @@
-﻿namespace LittleTownBoardGenerator.Console;
+﻿namespace LittleTownBoardGenerator.Core;
 
 public class Position
 {

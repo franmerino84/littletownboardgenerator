@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.34221.33
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LittleTownBoardGenerator.Console", "LittleTownBoardGenerator.Console\LittleTownBoardGenerator.Console.csproj", "{44221375-C1D2-40ED-B007-D7AF71E668BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LittleTownBoardGenerator.Console", "LittleTownBoardGenerator.Console\LittleTownBoardGenerator.Console.csproj", "{44221375-C1D2-40ED-B007-D7AF71E668BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LittleTownBoardGenerator.Core", "LittleTownBoardGenerator.Core\LittleTownBoardGenerator.Core.csproj", "{F74842A4-C1EA-4B2D-9CD0-3FE1F28DEBA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LittleTownBoardGenerator.Maui", "LittleTownBoardGenerator.Maui\LittleTownBoardGenerator.Maui.csproj", "{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,16 @@ Global
 		{44221375-C1D2-40ED-B007-D7AF71E668BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44221375-C1D2-40ED-B007-D7AF71E668BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44221375-C1D2-40ED-B007-D7AF71E668BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F74842A4-C1EA-4B2D-9CD0-3FE1F28DEBA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F74842A4-C1EA-4B2D-9CD0-3FE1F28DEBA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F74842A4-C1EA-4B2D-9CD0-3FE1F28DEBA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F74842A4-C1EA-4B2D-9CD0-3FE1F28DEBA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{106B18D2-622C-4BCE-83ED-8C3CC07B4ABF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

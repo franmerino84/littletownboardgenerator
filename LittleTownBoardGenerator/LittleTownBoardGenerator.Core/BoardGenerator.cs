@@ -1,4 +1,6 @@
-﻿namespace LittleTownBoardGenerator.Console
+﻿using LittleTownBoardGenerator.Console;
+
+namespace LittleTownBoardGenerator.Core
 {
     public static class BoardGenerator
     {

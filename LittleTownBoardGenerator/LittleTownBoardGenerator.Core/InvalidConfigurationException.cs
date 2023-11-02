@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LittleTownBoardGenerator.Console
+namespace LittleTownBoardGenerator.Core
 {
     [Serializable]
     public class InvalidConfigurationException : Exception

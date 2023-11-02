@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using LittleTownBoardGenerator.Console;
+using System.Text;
 
-namespace LittleTownBoardGenerator.Console;
+namespace LittleTownBoardGenerator.Core;
 
 public class Board
 {
