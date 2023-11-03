@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace LittleTownBoardGenerator.Maui
+namespace LittleTownBoardGenerator.Maui.Platforms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

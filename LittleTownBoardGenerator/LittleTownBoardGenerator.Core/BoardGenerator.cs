@@ -1,25 +1,26 @@
-﻿using LittleTownBoardGenerator.Console;
-
-namespace LittleTownBoardGenerator.Core
+﻿namespace LittleTownBoardGenerator.Core
 {
     public static class BoardGenerator
     {
         private static readonly Random Random = new Random();
 
-        public static Board Generate() => Generate(new BoardGenerationConfiguration());
+        public async static Task<Board> Generate() => await Generate(new BoardGenerationConfiguration()).ConfigureAwait(false);
 
-        public static Board Generate(BoardGenerationConfiguration configuration)
+        public async static Task<Board> Generate(BoardGenerationConfiguration configuration)
         {
             var board = new Board(configuration.Width, configuration.Height);
             var resources = GetResourceList(configuration);
             var positions = GetPositions(configuration);
 
-            FillUpBoard(board, resources, positions, configuration);
+            var isValid = await FillUpBoard(board, resources, positions, configuration).ConfigureAwait(false);
+
+            if (!isValid)
+                return null;
 
             return board;
         }
 
-        private static bool FillUpBoard(Board board, List<Square> resources, List<Position> positions, BoardGenerationConfiguration configuration)
+        private async static Task<bool> FillUpBoard(Board board, List<Square> resources, List<Position> positions, BoardGenerationConfiguration configuration)
         {
             if (resources.Count == 0)
                 return board.IsValid(configuration, true);
@@ -35,11 +36,11 @@ namespace LittleTownBoardGenerator.Core
             board.Squares[position.X, position.Y] = resource;
 
             if (board.IsValid(configuration, false))
-                return FillUpBoard(board, remainingResources, remainingPositions, configuration);
+                return await FillUpBoard(board, remainingResources, remainingPositions, configuration).ConfigureAwait(false);
 
             board.Squares[position.X, position.Y] = Square.Nothing;
 
-            return FillUpBoard(board, resources, remainingPositions, configuration);
+            return await FillUpBoard(board, resources, remainingPositions, configuration).ConfigureAwait(false);
         }
 
         private static List<Position> GetPositions(BoardGenerationConfiguration configuration)

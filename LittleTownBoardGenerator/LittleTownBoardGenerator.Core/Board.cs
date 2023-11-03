@@ -1,5 +1,4 @@
-﻿using LittleTownBoardGenerator.Console;
-using System.Text;
+﻿using System.Text;
 
 namespace LittleTownBoardGenerator.Core;
 

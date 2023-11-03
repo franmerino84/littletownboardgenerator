@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace LittleTownBoardGenerator.Maui.Platforms.iOS
+namespace LittleTownBoardGenerator.UI.Maui
 {
     public class Program
     {

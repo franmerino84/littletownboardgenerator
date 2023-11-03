@@ -1,6 +1,4 @@
-﻿using LittleTownBoardGenerator.Console;
-
-namespace LittleTownBoardGenerator.Core;
+﻿namespace LittleTownBoardGenerator.Core;
 
 public static class BoardGenerationConfigurationBuilder
 {

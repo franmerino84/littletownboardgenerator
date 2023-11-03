@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace LittleTownBoardGenerator.Maui.Platforms.Android
+namespace LittleTownBoardGenerator.UI.Maui
 {
     [Application]
     public class MainApplication : MauiApplication

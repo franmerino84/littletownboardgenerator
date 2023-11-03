@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace LittleTownBoardGenerator.Maui.Platforms.MacCatalyst
+namespace LittleTownBoardGenerator.UI.Maui
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

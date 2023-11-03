@@ -1,5 +1,4 @@
-﻿using LittleTownBoardGenerator.Console;
-using LittleTownBoardGenerator.Core;
+﻿using LittleTownBoardGenerator.Core;
 
 namespace LittleTownBoardGenerator.Maui
 {
