@@ -1,6 +1,6 @@
 ﻿namespace LittleTownBoardGenerator.Core;
 
-public record BoardGenerationConfigurationOptions(
+public record BoardGenerationGeneralConfiguration(
     int MinWidth = 9,
     int MaxWidth = 9,
     int MinHeight = 6,

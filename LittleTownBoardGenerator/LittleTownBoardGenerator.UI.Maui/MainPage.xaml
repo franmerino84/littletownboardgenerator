@@ -36,7 +36,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -58,7 +58,7 @@
             <Label Text="Bosques Min:" Grid.Row="3" Grid.Column="1" TextColor="Green"/>
             <Entry x:Name="minWoods" Grid.Row="3" BackgroundColor="White" Grid.Column="2" Text="6" Keyboard="Numeric" TextColor="Black" />
             <Label Text="Bosques Max:"  Grid.Row="3" Grid.Column="4" TextColor="Green"/>
-            <Entry x:Name="maxWoods" Grid.Row="3" BackgroundColor="White" Grid.Column="5" Text="7" Keyboard="Numeric" TextColor="Black" />
+            <Entry x:Name="maxWoods" Grid.Row="3" BackgroundColor="White" Grid.Column="5" Text="6" Keyboard="Numeric" TextColor="Black" />
             <Label Text="Recursos Min:" Grid.Row="4" Grid.Column="1" TextColor="LightGray"/>
             <Entry x:Name="minResources" Grid.Row="4" BackgroundColor="White" Grid.Column="2" Text="0" Keyboard="Numeric" TextColor="Black" />
             <Label Text="Recursos Max:"  Grid.Row="4" Grid.Column="4" TextColor="LightGray"/>

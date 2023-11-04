@@ -1,18 +1,38 @@
-﻿namespace LittleTownBoardGenerator.Core
+﻿using System.Threading;
+
+namespace LittleTownBoardGenerator.Core
 {
     public static class BoardGenerator
     {
-        private static readonly Random Random = new Random();
+        public async static Task<Board?> Generate(BoardGenerationGeneralConfiguration generalConfiguration, CancellationToken cancellationToken)
+        {
+            var configurations = BoardGenerationConfigurationBuilder.BuildConfigurations(generalConfiguration);
 
-        public async static Task<Board> Generate() => await Generate(new BoardGenerationConfiguration()).ConfigureAwait(false);
+            return await Generate(configurations, cancellationToken);
+        }
 
-        public async static Task<Board> Generate(BoardGenerationConfiguration configuration)
+        private static async Task<Board?> Generate(List<BoardGenerationConfiguration> configurations, CancellationToken cancellationToken)
+        {
+            if (configurations == null || configurations.Count == 0)
+                return null;
+
+            var board = await Generate(configurations[0], cancellationToken);
+
+            if (board != null)
+                return board;
+            
+            return await Generate(configurations.Skip(1).ToList(), cancellationToken);
+        }
+
+        public async static Task<Board?> Generate(CancellationToken cancellationToken) => await Generate(new BoardGenerationConfiguration(), cancellationToken).ConfigureAwait(false);
+
+        public async static Task<Board?> Generate(BoardGenerationConfiguration configuration, CancellationToken cancellationToken)
         {
             var board = new Board(configuration.Width, configuration.Height);
             var resources = GetResourceList(configuration);
             var positions = GetPositions(configuration);
 
-            var isValid = await FillUpBoard(board, resources, positions, configuration).ConfigureAwait(false);
+            var isValid = await FillUpBoard(board, resources, positions, configuration, cancellationToken).ConfigureAwait(false);
 
             if (!isValid)
                 return null;
@@ -20,8 +40,11 @@
             return board;
         }
 
-        private async static Task<bool> FillUpBoard(Board board, List<Square> resources, List<Position> positions, BoardGenerationConfiguration configuration)
+        private async static Task<bool> FillUpBoard(Board board, List<Square> resources, List<Position> positions, BoardGenerationConfiguration configuration, CancellationToken cancellationToken)
         {
+            if (cancellationToken.IsCancellationRequested)
+                throw new BoardGenerationCancelledException();
+
             if (resources.Count == 0)
                 return board.IsValid(configuration, true);
 
@@ -35,12 +58,13 @@
 
             board.Squares[position.X, position.Y] = resource;
 
-            if (board.IsValid(configuration, false))
-                return await FillUpBoard(board, remainingResources, remainingPositions, configuration).ConfigureAwait(false);
+            if (board.IsValid(configuration, false) &&
+                await FillUpBoard(board, remainingResources, remainingPositions, configuration, cancellationToken).ConfigureAwait(false))
+                return true;
 
             board.Squares[position.X, position.Y] = Square.Nothing;
 
-            return await FillUpBoard(board, resources, remainingPositions, configuration).ConfigureAwait(false);
+            return await FillUpBoard(board, resources, remainingPositions, configuration, cancellationToken).ConfigureAwait(false);
         }
 
         private static List<Position> GetPositions(BoardGenerationConfiguration configuration)
@@ -50,21 +74,7 @@
                 for (int j = 0; j < configuration.Height; j++)
                     positions.Add(new Position(i, j));
 
-            return ShufflePositions(positions);
-        }
-
-        private static List<Position> ShufflePositions(List<Position> positions)
-        {
-            var n = positions.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = Random.Next(n + 1);
-                var value = positions[k];
-                positions[k] = positions[n];
-                positions[n] = value;
-            }
-            return positions;
+            return Shuffler.Shuffle(positions);
         }
 
         private static List<Square> GetResourceList(BoardGenerationConfiguration configuration)

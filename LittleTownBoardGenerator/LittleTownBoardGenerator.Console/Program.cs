@@ -2,9 +2,11 @@
 
 using LittleTownBoardGenerator.Core;
 
-var options = new BoardGenerationConfigurationOptions();
+var generalConfiguration = new BoardGenerationGeneralConfiguration(5,9,6,6,4,4,5,7,6,6,1,3,true,true);
 
-var board = await BoardGenerator.Generate(BoardGenerationConfigurationBuilder.Build(options));
+var _ = BoardGenerationConfigurationBuilder.BuildConfigurations(generalConfiguration);
+
+var board = await BoardGenerator.Generate(BoardGenerationConfigurationBuilder.BuildConfiguration(generalConfiguration), CancellationToken.None);
 Console.WriteLine(board);
 
 

@@ -5,7 +5,8 @@ namespace LittleTownBoardGenerator.UI.Maui
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage(){
+        public MainPage()
+        {
             InitializeComponent();
             BuildBoard().GetAwaiter().GetResult();
         }
@@ -14,24 +15,24 @@ namespace LittleTownBoardGenerator.UI.Maui
         {
             try
             {
-                DoValidateOptions();
-
                 generateButton.IsEnabled = false;
                 resetButton.IsEnabled = false;
+
+                DoValidateGeneralConfiguration();
+
                 infoLabel.Text = "Generando el tablero...";
 
-                var options = GetOptions();
-                var configuration = BoardGenerationConfigurationBuilder.Build(options);
-                Board board = null;
-                var retries = 0;
-                while (board == null && retries < 1000)
-                {
-                    board = await BoardGenerator.Generate(configuration).ConfigureAwait(false);
-                    retries++;
-                }
+                
+                var generalConfiguration = GetGeneralConfiguration();
+
+                var cancellationTokenSource = new CancellationTokenSource();
+                var timer = new Timer(CancelTask, cancellationTokenSource, TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(-1));
+
+                var board = await BoardGenerator.Generate(generalConfiguration, cancellationTokenSource.Token);
+
                 if (board == null)
                 {
-                    infoLabel.Text = "No se consiguió generar el tablero.";
+                    infoLabel.Text = "No se puede generar un tablero con esas opciones.";
                     return;
                 }
 
@@ -40,9 +41,9 @@ namespace LittleTownBoardGenerator.UI.Maui
                 {
                     for (var j = 0; j < board.Height; j++)
                     {
-                        BoxView box = new BoxView();
+                        BoxView box = new();
 
-                        Color backgroundColor = MapBackgroundColor(board.Squares[i, j]);
+                        Color backgroundColor = MainPage.MapBackgroundColor(board.Squares[i, j]);
                         box.Color = backgroundColor;
                         box.Margin = new Thickness(1, 1, 1, 1);
 
@@ -52,12 +53,17 @@ namespace LittleTownBoardGenerator.UI.Maui
                     }
                 }
                 infoLabel.Text = "Tablero generado con éxito.";
-            }catch(BoardOptionsException ex)
+            }
+            catch (BoardGenerationCancelledException)
+            {
+                infoLabel.Text = "Tardó mucho en generar el tablero. Reduce opciones.";
+            }
+            catch (BoardGeneralConfigurationException ex)
             {
                 infoLabel.Text = ex.Message;
             }
-            catch(Exception)
-            {                
+            catch (Exception)
+            {
                 infoLabel.Text = "Ocurrió un error inesperado.";
             }
             finally
@@ -67,34 +73,41 @@ namespace LittleTownBoardGenerator.UI.Maui
             }
         }
 
-        private void DoValidateOptions()
+        private void CancelTask(object state)
+        {
+            var cancellationTokenSource = (CancellationTokenSource)state;
+            cancellationTokenSource.Cancel();
+        }
+
+        private void DoValidateGeneralConfiguration()
         {
             try
             {
                 if (int.Parse(minMountains.Text) > int.Parse(maxMountains.Text))
-                    throw new BoardOptionsException("El máximo de montañas no puede ser menor que su mínimo.");
+                    throw new BoardGeneralConfigurationException("El máximo de montañas no puede ser menor que su mínimo.");
 
                 if (int.Parse(minLakes.Text) > int.Parse(maxLakes.Text))
-                    throw new BoardOptionsException("El máximo de lagos no puede ser menor que su mínimo.");
+                    throw new BoardGeneralConfigurationException("El máximo de lagos no puede ser menor que su mínimo.");
 
                 if (int.Parse(minWoods.Text) > int.Parse(maxWoods.Text))
-                    throw new BoardOptionsException("El máximo de bosques no puede ser menor que su mínimo.");
+                    throw new BoardGeneralConfigurationException("El máximo de bosques no puede ser menor que su mínimo.");
 
                 if (int.Parse(minResources.Text) > int.Parse(maxResources.Text))
-                    throw new BoardOptionsException("El máximo de recursos no puede ser menor que su mínimo.");
+                    throw new BoardGeneralConfigurationException("El máximo de recursos no puede ser menor que su mínimo.");
 
                 if (int.Parse(minMountains.Text) + int.Parse(minLakes.Text) + int.Parse(minWoods.Text) > 54)
-                    throw new BoardOptionsException("Los recursos específicados no caben en el tablero.");
-            }catch(FormatException)
+                    throw new BoardGeneralConfigurationException("Los recursos específicados no caben en el tablero.");
+            }
+            catch (FormatException)
             {
-                throw new BoardOptionsException("Todas las casillas de opciones deben rellenarse.");
+                throw new BoardGeneralConfigurationException("Todas las casillas de opciones deben rellenarse bien.");
             }
         }
 
 
-        private BoardGenerationConfigurationOptions GetOptions()
+        private BoardGenerationGeneralConfiguration GetGeneralConfiguration()
         {
-            return new BoardGenerationConfigurationOptions(
+            return new BoardGenerationGeneralConfiguration(
                 9,
                 9,
                 6,
@@ -116,7 +129,7 @@ namespace LittleTownBoardGenerator.UI.Maui
             await BuildBoard().ConfigureAwait(false);
         }
 
-        private async void ResetButton_Clicked(object sender, EventArgs args)
+        private void ResetButton_Clicked(object sender, EventArgs args)
         {
             generateButton.IsEnabled = false;
             resetButton.IsEnabled = false;
@@ -135,21 +148,16 @@ namespace LittleTownBoardGenerator.UI.Maui
 
         }
 
-        private Color MapBackgroundColor(Square square)
+        private static Color MapBackgroundColor(Square square)
         {
-            switch (square)
+            return square switch
             {
-                case Square.Nothing:
-                    return Color.FromRgba(255, 255, 255, 255);
-                case Square.Lake:
-                    return Color.FromRgba(0, 0, 255, 255);
-                case Square.Wood:
-                    return Color.FromRgba(0, 255, 0, 255);
-                case Square.Mountain:
-                    return Color.FromRgba(255, 0, 0, 255);
-                default:
-                    return Color.FromRgba(0, 0, 0, 255);
-            }
+                Square.Nothing => Color.FromRgba(255, 255, 255, 255),
+                Square.Lake => Color.FromRgba(0, 0, 255, 255),
+                Square.Wood => Color.FromRgba(0, 255, 0, 255),
+                Square.Mountain => Color.FromRgba(255, 0, 0, 255),
+                _ => Color.FromRgba(0, 0, 0, 255),
+            };
         }
     }
 }
