@@ -13,5 +13,7 @@ public record BoardGenerationGeneralConfiguration(
     int MaxWoods = 6,
     int MinSurroundingResources = 0,
     int MaxSurroundingResources = 3,
+    int MinResources = 15,
+    int MaxResources = 15,
     bool AllowInaccessibleResourcesCanBeFalse = true,
     bool AllowInaccessibleResourcesCanBeTrue = false);

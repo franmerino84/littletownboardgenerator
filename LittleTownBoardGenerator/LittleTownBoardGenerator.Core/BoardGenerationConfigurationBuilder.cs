@@ -3,22 +3,7 @@
 public static class BoardGenerationConfigurationBuilder
 {
     private static readonly Random _random = new();
-
-    public static BoardGenerationConfiguration BuildConfiguration(BoardGenerationGeneralConfiguration generalConfiguration)
-    {
-        return new BoardGenerationConfiguration
-        {
-            Width = _random.Next(generalConfiguration.MinWidth, generalConfiguration.MaxWidth + 1),
-            Height = _random.Next(generalConfiguration.MinHeight, generalConfiguration.MaxHeight + 1),
-            Mountains = _random.Next(generalConfiguration.MinMountains, generalConfiguration.MaxMountains + 1),
-            Lakes = _random.Next(generalConfiguration.MinLakes, generalConfiguration.MaxLakes + 1),
-            Woods = _random.Next(generalConfiguration.MinWoods, generalConfiguration.MaxWoods + 1),
-            MinSurroundingResources = generalConfiguration.MinSurroundingResources,
-            MaxSurroundingResources = generalConfiguration.MaxSurroundingResources,
-            AllowInaccessibleResources = GetAllowInaccessibleResources(generalConfiguration)
-        };
-    }
-
+    
     public static List<BoardGenerationConfiguration> BuildConfigurations(BoardGenerationGeneralConfiguration generalConfiguration)
     {
         var configurations = new List<BoardGenerationConfiguration>();
@@ -36,6 +21,7 @@ public static class BoardGenerationConfigurationBuilder
             woods.SelectMany(wood =>
             allowInnaccessibleResources.Select(allow =>
                 new BoardGenerationConfiguration(width, height, mountain, lake, wood, generalConfiguration.MinSurroundingResources, generalConfiguration.MaxSurroundingResources, allow)))))))
+            .Where(configuration=> configuration.IsValid(generalConfiguration))
             .ToList();
     }
 
@@ -53,19 +39,5 @@ public static class BoardGenerationConfigurationBuilder
             throw new InvalidConfigurationException();
 
         return list;
-    }
-
-    private static bool GetAllowInaccessibleResources(BoardGenerationGeneralConfiguration generalConfiguration)
-    {
-        if (generalConfiguration.AllowInaccessibleResourcesCanBeFalse && !generalConfiguration.AllowInaccessibleResourcesCanBeTrue)
-            return false;
-
-        if (!generalConfiguration.AllowInaccessibleResourcesCanBeFalse && generalConfiguration.AllowInaccessibleResourcesCanBeTrue)
-            return true;
-
-        if (generalConfiguration.AllowInaccessibleResourcesCanBeFalse && generalConfiguration.AllowInaccessibleResourcesCanBeTrue)
-            return _random.Next(2) == 0;
-
-        throw new InvalidConfigurationException();
     }
 }

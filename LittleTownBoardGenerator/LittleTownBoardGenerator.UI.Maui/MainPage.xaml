@@ -35,6 +35,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
@@ -47,23 +48,27 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Text="Montañas Min:" Grid.Row="1" Grid.Column="1" TextColor="Red"/>
+            <Label Text="Montañas Min:" Grid.Row="1" Grid.Column="1" TextColor="Red" VerticalTextAlignment="Center"/>
             <Entry x:Name="minMountains" Grid.Row="1" BackgroundColor="White" Grid.Column="2" Text="4" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Montañas Max:"  Grid.Row="1" Grid.Column="4" TextColor="Red"/>
+            <Label Text="Montañas Max:"  Grid.Row="1" Grid.Column="4" TextColor="Red" VerticalTextAlignment="Center"/>
             <Entry x:Name="maxMountains" Grid.Row="1" BackgroundColor="White" Grid.Column="5" Text="4" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Lagos Min:" Grid.Row="2" Grid.Column="1" TextColor="Blue"/>
+            <Label Text="Lagos Min:" Grid.Row="2" Grid.Column="1" TextColor="Blue" VerticalTextAlignment="Center" />
             <Entry x:Name="minLakes" Grid.Row="2" BackgroundColor="White" Grid.Column="2" Text="5" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Lagos Max:"  Grid.Row="2" Grid.Column="4" TextColor="Blue"/>
+            <Label Text="Lagos Max:"  Grid.Row="2" Grid.Column="4" TextColor="Blue" VerticalTextAlignment="Center"/>
             <Entry x:Name="maxLakes" Grid.Row="2" BackgroundColor="White" Grid.Column="5" Text="5" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Bosques Min:" Grid.Row="3" Grid.Column="1" TextColor="Green"/>
+            <Label Text="Bosques Min:" Grid.Row="3" Grid.Column="1" TextColor="Green" VerticalTextAlignment="Center"/>
             <Entry x:Name="minWoods" Grid.Row="3" BackgroundColor="White" Grid.Column="2" Text="6" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Bosques Max:"  Grid.Row="3" Grid.Column="4" TextColor="Green"/>
+            <Label Text="Bosques Max:"  Grid.Row="3" Grid.Column="4" TextColor="Green" VerticalTextAlignment="Center"/>
             <Entry x:Name="maxWoods" Grid.Row="3" BackgroundColor="White" Grid.Column="5" Text="6" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Recursos Min:" Grid.Row="4" Grid.Column="1" TextColor="LightGray"/>
-            <Entry x:Name="minResources" Grid.Row="4" BackgroundColor="White" Grid.Column="2" Text="0" Keyboard="Numeric" TextColor="Black" />
-            <Label Text="Recursos Max:"  Grid.Row="4" Grid.Column="4" TextColor="LightGray"/>
-            <Entry x:Name="maxResources" Grid.Row="4" BackgroundColor="White" Grid.Column="5" Text="3" Keyboard="Numeric" TextColor="Black" />
-            <Label x:Name="infoLabel" Grid.Row="6" Grid.ColumnSpan="7" HorizontalOptions="Center" TextColor="Yellow" />
+            <Label Text="Recursos Min:" Grid.Row="4" Grid.Column="1" TextColor="LightGray" VerticalTextAlignment="Center"/>
+            <Entry x:Name="minResources" Grid.Row="4" BackgroundColor="White" Grid.Column="2" Text="15" Keyboard="Numeric" TextColor="Black" />
+            <Label Text="Recursos Max:"  Grid.Row="4" Grid.Column="4" TextColor="LightGray" VerticalTextAlignment="Center"/>
+            <Entry x:Name="maxResources" Grid.Row="4" BackgroundColor="White" Grid.Column="5" Text="15" Keyboard="Numeric" TextColor="Black" />
+            <Label Text="Recursos Alrededor Min:" Grid.Row="5" Grid.Column="1" TextColor="LightGray" VerticalTextAlignment="Center"/>
+            <Entry x:Name="minSurroundingResources" Grid.Row="5" BackgroundColor="White" Grid.Column="2" Text="0" Keyboard="Numeric" TextColor="Black" />
+            <Label Text="Recursos Alrededor Max:"  Grid.Row="5" Grid.Column="4" TextColor="LightGray" VerticalTextAlignment="Center"/>
+            <Entry x:Name="maxSurroundingResources" Grid.Row="5" BackgroundColor="White" Grid.Column="5" Text="3" Keyboard="Numeric" TextColor="Black" />
+            <Label x:Name="infoLabel" Grid.Row="7" Grid.ColumnSpan="7" HorizontalOptions="Center" TextColor="Yellow" />
         </Grid>
     </StackLayout>
 

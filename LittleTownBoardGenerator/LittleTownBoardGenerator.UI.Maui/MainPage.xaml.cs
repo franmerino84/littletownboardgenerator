@@ -43,7 +43,7 @@ namespace LittleTownBoardGenerator.UI.Maui
                     {
                         BoxView box = new();
 
-                        Color backgroundColor = MainPage.MapBackgroundColor(board.Squares[i, j]);
+                        Color backgroundColor = MapBackgroundColor(board.Squares[i, j]);
                         box.Color = backgroundColor;
                         box.Margin = new Thickness(1, 1, 1, 1);
 
@@ -95,8 +95,18 @@ namespace LittleTownBoardGenerator.UI.Maui
                 if (int.Parse(minResources.Text) > int.Parse(maxResources.Text))
                     throw new BoardGeneralConfigurationException("El máximo de recursos no puede ser menor que su mínimo.");
 
+                if (int.Parse(minSurroundingResources.Text) > int.Parse(maxResources.Text))
+                    throw new BoardGeneralConfigurationException("El máximo de recursos alrededor no puede ser menor que su mínimo.");
+
                 if (int.Parse(minMountains.Text) + int.Parse(minLakes.Text) + int.Parse(minWoods.Text) > 54)
                     throw new BoardGeneralConfigurationException("Los recursos específicados no caben en el tablero.");
+                
+                if (int.Parse(minResources.Text) > int.Parse(maxMountains.Text) + int.Parse(maxLakes.Text) + int.Parse(maxWoods.Text))
+                    throw new BoardGeneralConfigurationException("El mínimo de recursos no puede ser mayor que la suma de máximos.");
+
+                if (int.Parse(maxResources.Text) < int.Parse(minMountains.Text) + int.Parse(minLakes.Text) + int.Parse(minWoods.Text))
+                    throw new BoardGeneralConfigurationException("El máximo de recursos no puede ser menor que la suma de mínimos.");
+
             }
             catch (FormatException)
             {
@@ -118,6 +128,8 @@ namespace LittleTownBoardGenerator.UI.Maui
                 int.Parse(maxLakes.Text),
                 int.Parse(minWoods.Text),
                 int.Parse(maxWoods.Text),
+                int.Parse(minSurroundingResources.Text),
+                int.Parse(maxSurroundingResources.Text),
                 int.Parse(minResources.Text),
                 int.Parse(maxResources.Text),
                 true,
@@ -140,8 +152,10 @@ namespace LittleTownBoardGenerator.UI.Maui
             maxLakes.Text = "5";
             minWoods.Text = "6";
             maxWoods.Text = "6";
-            minResources.Text = "0";
-            maxResources.Text = "3";
+            minResources.Text = "15";
+            maxResources.Text = "15";
+            minSurroundingResources.Text = "0";
+            maxSurroundingResources.Text = "3";
 
             generateButton.IsEnabled = true;
             resetButton.IsEnabled = true;
